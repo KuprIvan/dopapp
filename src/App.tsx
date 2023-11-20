@@ -1,26 +1,41 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import {NavLink, Outlet} from "react-router-dom";
+import styles from "./components/Site.module.css";
+import {S} from "./components/pages/__styles";
+import useWindowSize from "./helpers/useWindowSize";
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const widthSize = useWindowSize();
+
+    return (
+        <>
+            <div className={styles.header}><h1>HEADER</h1></div>
+            <div className={styles.body}>
+                {
+                    widthSize > 700
+                        ?
+                        <div className={styles.nav}>
+                            <S.NavWrapper><NavLink to={'/page/0'}>Page1</NavLink></S.NavWrapper>
+                            <S.NavWrapper><NavLink to={'/page/1'}>Page2</NavLink></S.NavWrapper>
+                            <S.NavWrapper><NavLink to={'/page/2'}>Page3</NavLink></S.NavWrapper>
+                            <S.NavWrapper><NavLink to={'/page/protected'}>Protected Page</NavLink></S.NavWrapper>
+                        </div>
+                        :
+                        <div></div>
+                }
+                <div className={styles.content}>
+                    <Outlet/>
+                </div>
+
+            </div>
+            <div style={{backgroundColor: "lightseagreen", height: "10vh", color: "#fff"}}>
+                footer
+            </div>
+        </>
+    );
 }
+
 
 export default App;
